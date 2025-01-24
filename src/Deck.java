@@ -21,4 +21,22 @@ public class Deck {
             i++;
         }
     }
+
+    public void shuffle(){
+        for(int i=0; i<cardList.size(); i++){
+            int randIndex = (int)(Math.random() * cardList.size());
+            //swap cards
+            Card tempCard = cardList.get(i);
+            cardList.set(i, cardList.get(randIndex));
+            cardList.set(randIndex, tempCard);
+        }
+    }
+
+    public Card drawCard(){
+        return cardList.removeFirst();
+    }
+
+    public boolean isEmpty(){
+        return cardList.isEmpty();
+    }
 }
