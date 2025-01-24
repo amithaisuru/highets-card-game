@@ -20,4 +20,8 @@ public class Player {
         playerCount++;
     }
 
+    public String toString(){
+        return ("Player ID: " + this.id + " Name: " + this.name);
+    }
+
 }
