@@ -1,28 +1,19 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Player {
-    private static int playerCount = 1;
-    private int id;
-    private String name;
-    private int score;
-    private ArrayList<Card> hand = new ArrayList<Card>();
+    protected static int playerCount = 1;
+    protected int id;
+    protected String name;
+    protected int score;
+    protected ArrayList<Card> hand = new ArrayList<>();
 
-    public Player(){
-        this.name = "Player " + playerCount;
-        this.id = playerCount;
-        playerCount++;
-    }
-
-    public Player(String name){
-        this.name = name;
-        this.id = playerCount;
-        playerCount++;
-    }
-
-    public void showCard(){
-         for(Card card: hand){
-             System.out.println(card.displayCard());
+    public void showCardHand(){
+        System.out.println("ID\t\tCard");
+         for(int i=0; i<hand.size(); i++){
+             System.out.println(i + "\t\t" + hand.get(i).displayCard());
          }
     }
 
@@ -43,6 +34,11 @@ public class Player {
         return hand.removeFirst();
     }
 
+    public Card drawRandomCard(){
+        int randIndex = (int)(Math.random() * hand.size());
+        return hand.remove(randIndex);
+    }
+
     public void addScore(int points){
         score += points;
     }
@@ -55,4 +51,15 @@ public class Player {
         return ("Player ID: " + this.id + " Name: " + this.name + " Score: " + this.score);
     }
 
+    public void sortCardHand(){
+        this.hand.sort(Comparator.comparingInt(Card->Card.getValue()));
+    }
+
+    public Card drawCard(Card otherPlayerCard){
+        return null;
+    };
+
+    public Card drawCardById(int id){
+        return hand.remove(id);
+    }
 }

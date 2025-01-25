@@ -1,14 +1,25 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
+    static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     public static void main(String[] args) {
 
-        ArrayList<Player> players = new ArrayList<Player>();
-        int numOfPlayers = 4;
+        Card[] cardsOnTable = new Card[2];
+        Player[] players = new Player[2];
+        int numOfPlayers = players.length;
 
-        for(int i = 0; i<numOfPlayers; i++){
-            players.add(new Player());
-        }
+        //make human player
+        Player human = new Human("Amitha");
+        players[0] = human;
+
+        //make computer
+        Player computer = new Computer();
+        players[1] = computer;
 
         //print players
         for(Player player : players){
@@ -27,57 +38,50 @@ public class Main {
             }
         }
 
-        //display cards
-        System.out.println("cards");
+        //sort cards on hand
         for(Player player : players){
-            System.out.println("player: "+player.getID());
-            player.showCard();
+            player.sortCardHand();
         }
-
-        //while eac player has a card
-            //ech player plays top card
-            //find player with highest card
-            //give apoint to winner
 
         boolean continueLoop = true;
         int round = 1;
 
+        Scanner scanner = new Scanner(System.in);
+
         while(continueLoop){
 
-            int pointsToGive = 1;
-            Card currentHighestCard = new Card(0,null);
-            Player highestPlayer = new Player();
+            clearScreen();
+            int pointsToAdd = 1;
 
-            System.out.println("round " + round);
+            //display cards
+            human.showCardHand();
+            System.out.println("Enter card to play(cardID): ");
+            int cardToPlay = scanner.nextInt();
 
-            for(int i=0; i<numOfPlayers; i++){
-                Card currentCard = players.get(i).drawTopCard();
+            Card humanPlacedCard = human.drawCardById(cardToPlay);
+            Card computerPlacedCard = computer.drawCard(humanPlacedCard);
 
-                System.out.println("\tplayer: " + players.get(i).getID() + " -> " + currentCard.displayCard() );
+            System.out.println("you: " + humanPlacedCard.displayCard());
+            System.out.println("Computer: " + computerPlacedCard.displayCard());
 
-                if(currentCard.getValue()>currentHighestCard.getValue()){
-                    currentHighestCard = currentCard;
-                    highestPlayer = players.get(i);
-                }
-                else if(currentCard.getValue()<currentHighestCard.getValue()){
-                    continue;
-                }
-                else{/*when two cards are equal*/
-                    pointsToGive++;
-                }
+            //conditions
+            if(humanPlacedCard.getValue() > computerPlacedCard.getValue()) {
+                human.addScore(pointsToAdd);
             }
+            else if(humanPlacedCard.getValue() < computerPlacedCard.getValue()) {
+                computer.addScore(pointsToAdd);
+            }
+            else //cards with same value
+                pointsToAdd ++;
 
-            highestPlayer.addScore(pointsToGive);
 
-            //break when every player left no cards
+            //break the loop when every player left no cards
             continueLoop = false;
             for(Player player : players){
                 if(player.haveAnyCards())
                     continueLoop = true;
             }
-
             round++;
-
         }
 
         //print score of each player

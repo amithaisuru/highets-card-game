@@ -11,9 +11,11 @@ public class Card {
     public int getValue(){
         return value;
     }
+    
     public String getSuit(){
         return suit;
     }
+
     public String displayCard(){
         return switch (this.value) {
             case 13 -> "A" + " of " + this.suit;
