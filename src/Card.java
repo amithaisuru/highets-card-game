@@ -9,11 +9,11 @@ public class Card {
     }
 
     public int getValue(){
-        return value;
+        return this.value;
     }
-    
+
     public String getSuit(){
-        return suit;
+        return this.suit;
     }
 
     public String displayCard(){

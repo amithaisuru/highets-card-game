@@ -1,17 +1,9 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
 
-    public static void main(String[] args) {
-
-        Card[] cardsOnTable = new Card[2];
+        public static void main(String[] args) {
         Player[] players = new Player[2];
-        int numOfPlayers = players.length;
 
         //make human player
         Player human = new Human("Amitha");
@@ -44,19 +36,19 @@ public class Main {
         }
 
         boolean continueLoop = true;
-        int round = 1;
+        int turn = 1;
 
         Scanner scanner = new Scanner(System.in);
+        int pointsToAdd = 1;
 
         while(continueLoop){
 
-            clearScreen();
-            int pointsToAdd = 1;
-
             //display cards
+            System.out.println("\n\nturn: " + turn + "-----------------------");
             human.showCardHand();
             System.out.println("Enter card to play(cardID): ");
             int cardToPlay = scanner.nextInt();
+
 
             Card humanPlacedCard = human.drawCardById(cardToPlay);
             Card computerPlacedCard = computer.drawCard(humanPlacedCard);
@@ -67,13 +59,17 @@ public class Main {
             //conditions
             if(humanPlacedCard.getValue() > computerPlacedCard.getValue()) {
                 human.addScore(pointsToAdd);
+                pointsToAdd = 1;
             }
             else if(humanPlacedCard.getValue() < computerPlacedCard.getValue()) {
                 computer.addScore(pointsToAdd);
+                pointsToAdd = 1;
             }
             else //cards with same value
                 pointsToAdd ++;
 
+            //display score
+            System.out.println("score:\n" + human.showScore() + "\n" + computer.showScore() +"\n");
 
             //break the loop when every player left no cards
             continueLoop = false;
@@ -81,7 +77,7 @@ public class Main {
                 if(player.haveAnyCards())
                     continueLoop = true;
             }
-            round++;
+            turn++;
         }
 
         //print score of each player

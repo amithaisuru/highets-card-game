@@ -13,7 +13,7 @@ public class Player {
     public void showCardHand(){
         System.out.println("ID\t\tCard");
          for(int i=0; i<hand.size(); i++){
-             System.out.println(i + "\t\t" + hand.get(i).displayCard());
+             System.out.println(i + " --------> " + hand.get(i).displayCard());
          }
     }
 
@@ -48,7 +48,7 @@ public class Player {
     }
 
     public String showScore(){
-        return ("Player ID: " + this.id + " Name: " + this.name + " Score: " + this.score);
+        return ("Player ID: " + this.id + " | Name: " + this.name + " | Score: " + this.score);
     }
 
     public void sortCardHand(){

@@ -10,7 +10,7 @@ public class Computer extends Player{
 
     /*
     this method returns a card that is equals or greater than opponent card
-    if no such card, place a random card
+    if no such card, place the minimum card
     */
     @Override
     public Card drawCard(Card otherPlayeCard){
@@ -28,7 +28,12 @@ public class Computer extends Player{
         if(cardToPlayIdx < hand.size() - 1)
             if(hand.get(cardToPlayIdx+1).getValue() > otherPlayerCardVal)
                 return hand.remove(cardToPlayIdx+1);
+            else
+                return hand.remove(cardToPlayIdx);
 
-        return hand.removeFirst();
+        else if(cardToPlayIdx == hand.size()-1)
+            return hand.remove(cardToPlayIdx);
+
+        return hand.removeFirst(); //returns card with the smallest value
     }
 }
